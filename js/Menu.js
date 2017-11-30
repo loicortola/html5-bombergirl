@@ -124,6 +124,9 @@ Menu = Class.extend({
         gGameEngine.stage.addChild(singleIcon);
         this.views.push(singleIcon);
 
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+          return;
+        }
         // multiplayer button
         var multiX = gGameEngine.size.w / 2 + modesDistance;
         var multiBgGraphics = new createjs.Graphics().beginFill("rgba(0, 0, 0, 0.5)").drawRect(multiX, modesY, modeSize, modeSize);

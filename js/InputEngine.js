@@ -36,6 +36,87 @@ InputEngine = Class.extend({
 
         document.addEventListener('keydown', this.onKeyDown);
         document.addEventListener('keyup', this.onKeyUp);
+        var arrows = document.getElementById('control-arrows');
+        arrows.addEventListener('mousedown', this.onTouchStart);
+        arrows.addEventListener('mouseup', this.onTouchEnd);
+        arrows.addEventListener('touchstart', this.onTouchStart);
+        arrows.addEventListener('touchmove', this.onTouchStart);
+        arrows.addEventListener('touchcancel', this.onTouchEnd);
+        arrows.addEventListener('touchend', this.onTouchEnd);
+        var button = document.getElementById('control-button');
+        button.addEventListener('mousedown', this.onTouchStart);
+        button.addEventListener('mouseup', this.onTouchEnd);
+        button.addEventListener('touchstart', this.onTouchStart);
+        button.addEventListener('touchmove', this.onTouchStart);
+        button.addEventListener('touchcancel', this.onTouchEnd);
+        button.addEventListener('touchend', this.onTouchEnd);
+    },
+
+    onTouchStart: function(event) {
+      var action;
+      if (event.target.id === 'control-arrows') {
+        var arrows = event.target;
+        var cx = arrows.offsetWidth / 2;
+        var cy = arrows.offsetHeight / 2;
+        var offsetY = arrows.offsetHeight / 4;
+
+        if (event.layerY < cy - offsetY ) {
+          action = 'up';
+        } else if (event.layerY > cy + offsetY) {
+          action = 'down';
+        } else if (event.layerX < cx) {
+          action = 'left';
+        } else {
+          action = 'right';
+        }
+
+        if (action) {
+            if (this.currentAction !== action) {
+              gInputEngine.actions[this.currentAction] = false;
+            }
+            gInputEngine.actions[action] = true;
+            event.preventDefault();
+            this.currentAction = action;
+        }
+      } else if (event.target.id === 'control-button') {
+        console.log('Here');
+        action = 'bomb';
+        gInputEngine.actions[action] = true;
+        event.preventDefault();
+      }
+      return false;
+    },
+
+    onTouchEnd: function(event) {
+        var action;
+        if (event.target.id === 'control-arrows') {
+          var arrows = event.target;
+          action = this.currentAction;
+          if (action) {
+              gInputEngine.actions[action] = false;
+              var listeners = gInputEngine.listeners[action];
+              if (listeners) {
+                  for (var i = 0; i < listeners.length; i++) {
+                      var listener = listeners[i];
+                      listener();
+                  }
+              }
+              event.preventDefault();
+          }
+        } else if (event.target.id === 'control-button') {
+          action = 'bomb';
+          gInputEngine.actions[action] = false;
+          var listeners = gInputEngine.listeners[action];
+          if (listeners) {
+              for (var i = 0; i < listeners.length; i++) {
+                  var listener = listeners[i];
+                  listener();
+              }
+          }
+          event.preventDefault();
+        }
+
+        return false;
     },
 
     onKeyDown: function(event) {

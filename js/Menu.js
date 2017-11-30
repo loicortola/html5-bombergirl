@@ -68,7 +68,7 @@ Menu = Class.extend({
         this.views.push(bg);
 
         // game title
-        text = text || [{text: 'Bomber', color: '#ffffff'}, {text: 'girl', color: '#ff4444'}];
+        text = text || [{text: 'MonPetit', color: '#ffffff'}, {text: 'Cadeau', color: '#ff4444'}];
 
         var title1 = new createjs.Text(text[0].text, "bold 35px Helvetica", text[0].color);
         var title2 = new createjs.Text(text[1].text, "bold 35px Helvetica", text[1].color);
@@ -101,8 +101,8 @@ Menu = Class.extend({
             that.setMode('single');
         });
 
-        var singleTitle1 = new createjs.Text("single", "16px Helvetica", "#ff4444");
-        var singleTitle2 = new createjs.Text("player", "16px Helvetica", "#ffffff");
+        var singleTitle1 = new createjs.Text("1 ", "16px Helvetica", "#ff4444");
+        var singleTitle2 = new createjs.Text("joueur", "16px Helvetica", "#ffffff");
         var singleTitleWidth = singleTitle1.getMeasuredWidth() + singleTitle2.getMeasuredWidth();
         var modeTitlesY = modesY + modeSize - singleTitle1.getMeasuredHeight() - 20;
 
@@ -135,8 +135,8 @@ Menu = Class.extend({
             that.setMode('multi');
         });
 
-        var multiTitle1 = new createjs.Text("multi", "16px Helvetica", "#99cc00");
-        var multiTitle2 = new createjs.Text("player", "16px Helvetica", "#ffffff");
+        var multiTitle1 = new createjs.Text("2 ", "16px Helvetica", "#99cc00");
+        var multiTitle2 = new createjs.Text("joueurs", "16px Helvetica", "#ffffff");
         var multiTitleWidth = multiTitle1.getMeasuredWidth() + multiTitle2.getMeasuredWidth();
 
         multiTitle1.x = multiX + (modeSize - multiTitleWidth) / 2;
@@ -169,7 +169,7 @@ Menu = Class.extend({
         var bg = new createjs.Shape(bgGraphics);
         gGameEngine.stage.addChild(bg);
 
-        var loadingText = new createjs.Text("Loading...", "20px Helvetica", "#FFFFFF");
+        var loadingText = new createjs.Text("Chargement...", "20px Helvetica", "#FFFFFF");
         loadingText.x = gGameEngine.size.w / 2 - loadingText.getMeasuredWidth() / 2;
         loadingText.y = gGameEngine.size.h / 2 - loadingText.getMeasuredHeight() / 2;
         gGameEngine.stage.addChild(loadingText);

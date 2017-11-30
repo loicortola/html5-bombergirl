@@ -41,7 +41,19 @@ GameEngine = Class.extend({
         // Init canvas
         this.stage = new createjs.Stage("canvas");
         this.stage.enableMouseOver();
-
+        var ratio = document.getElementById("canvas").offsetWidth / document.getElementById("canvas").offsetHeight;
+        if (ratio < 1) {
+          // Portrait mode
+          this.tilesX = Math.floor(15 * ratio);
+          this.tilesY = 15;
+        } else {
+          // Landscape mode
+          this.tilesX = 15;
+          this.tilesY = Math.floor(15 / ratio);
+        }
+        this.init();
+        document.getElementById("canvas").width = this.size.w;
+        document.getElementById("canvas").height = this.size.h;
         // Load assets
         var queue = new createjs.LoadQueue();
         var that = this;
@@ -325,10 +337,10 @@ GameEngine = Class.extend({
         if (gGameEngine.menu.visible) { return; }
 
         if (status == 'win') {
-            var winText = "You won!";
+            var winText = "Tu as Gagné!";
             if (gGameEngine.playersCount > 1) {
                 var winner = gGameEngine.getWinner();
-                winText = winner == 0 ? "Player 1 won!" : "Player 2 won!";
+                winText = winner == 0 ? "Le Joueur 1 a gagné!" : "Le Joueur 2 a gagné!";
             }
             this.menu.show([{text: winText, color: '#669900'}, {text: ' ;D', color: '#99CC00'}]);
         } else {
